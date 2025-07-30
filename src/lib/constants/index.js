@@ -44,3 +44,17 @@ export const taskListLinks = [
     //     colorKey: "",
     // }
 ]
+export const nijhofListLinks = [
+    {
+        label: "MultiAlarm",
+        icon: <CloudUpload />,
+        href: "/task/upload/multialarm",
+        colorKey: "",
+    },
+    {
+        label: "Volvo",
+        icon: <CloudUpload />,
+        href: "/task/upload/volvo",
+        colorKey: "",
+    }
+]

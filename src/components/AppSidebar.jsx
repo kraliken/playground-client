@@ -11,7 +11,7 @@ import {
     SidebarMenuItem,
     SidebarSeparator,
 } from "@/components/ui/sidebar"
-import { taskListLinks } from "@/lib/constants";
+import { nijhofListLinks, taskListLinks } from "@/lib/constants";
 import { ChevronDown, Code } from "lucide-react";
 import Link from "next/link";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
@@ -44,6 +44,32 @@ export async function AppSidebar() {
                     <SidebarGroup>
                         <SidebarGroupLabel asChild>
                             <CollapsibleTrigger>
+                                Nijhof
+                                <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                            </CollapsibleTrigger>
+                        </SidebarGroupLabel>
+                        <CollapsibleContent>
+                            <SidebarGroupContent>
+                                <SidebarMenu>
+                                    {nijhofListLinks.map(task => (
+                                        <SidebarMenuItem key={task.label}>
+                                            <SidebarMenuButton asChild>
+                                                <Link href={task.href}>
+                                                    {task.icon}
+                                                    {task.label}
+                                                </Link>
+                                            </SidebarMenuButton>
+                                        </SidebarMenuItem>
+                                    ))}
+                                </SidebarMenu>
+                            </SidebarGroupContent>
+                        </CollapsibleContent>
+                    </SidebarGroup>
+                </Collapsible>
+                {/* <Collapsible defaultOpen className="group/collapsible">
+                    <SidebarGroup>
+                        <SidebarGroupLabel asChild>
+                            <CollapsibleTrigger>
                                 Számlakiküldés
                                 <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                             </CollapsibleTrigger>
@@ -65,7 +91,7 @@ export async function AppSidebar() {
                             </SidebarGroupContent>
                         </CollapsibleContent>
                     </SidebarGroup>
-                </Collapsible>
+                </Collapsible> */}
             </SidebarContent>
             <SidebarFooter>
                 {/* <SidebarMenu>

@@ -47,6 +47,35 @@ export async function uploadInvoicesAction(prevData, formData) {
     }
 }
 
+export async function uploadInvoiceAction(prevData, formData) {
+
+    const files = formData.getAll('invoice');
+    const result = invoiceSchema.safeParse({ invoices: files });
+
+    if (!result.success) {
+        const { fieldErrors } = z.flattenError(result.error);
+        return { success: false, errors: fieldErrors };
+    }
+
+    try {
+        const { data } = await axios.post(
+            `${BASE_URL}/api/v1/upload/invoice/volvo`,
+            formData
+        );
+        return {
+            success: data.success,
+            message: data.message,
+        };
+
+    } catch (error) {
+        console.error('Feltöltési hiba:', error);
+        return {
+            success: false,
+            errors: { general: ['Hiba történt a feltöltés során'] }
+        };
+    }
+}
+
 export async function sendCompleteInvoicesAction() {
     try {
         const { data } = await axios.get(`${BASE_URL}/api/v1/invoices/send`);

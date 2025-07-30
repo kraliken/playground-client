@@ -25,7 +25,7 @@ const DataTableContainer = async () => {
                     <DataTable columns={completeColumns} data={complete} emptyTableMessage="Nincsenek küldhető számlák." />
                 </TabsContent>
                 <TabsContent value="incomplete-invoices">
-                    <DataTable columns={incompleteColumns} data={incomplete} emptyTableMessage="Minden számlához megvannak a szükséges adatok." />
+                    <DataTable columns={incompleteColumns} data={incomplete} emptyTableMessage="Nincs hiányzó adat." />
                 </TabsContent>
             </Tabs>
         </div>
