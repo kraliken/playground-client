@@ -8,22 +8,19 @@ import UploadForm from "./UploadForm"
 const PageHeader = ({ title, action, disabledButton }) => {
 
     return (
-        // <Card className="flex flex-col sm:flex-row items-center justify-between">
         <Card className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between">
-            {/* <CardHeader className="flex-1 flex items-center"> */}
             <CardHeader className="w-full sm:flex-1 flex items-center sm:items-center">
-                {/* <CardTitle> */}
                 <CardTitle className="w-full">
                     <h2>{title}</h2>
                 </CardTitle>
             </CardHeader>
-            {/* <CardContent className="flex-1 flex justify-end"> */}
             <CardContent className="w-full sm:flex-1 flex justify-end">
                 {action === "upload" && <InvoiceUploadForm />}
                 {action === "send" && <SendInvoicesButton disabledButton={disabledButton} />}
                 {action === "partner" && <NewPartnerDialog />}
                 {action === "email" && <NewEmailDialog />}
-                {action === "volvo" && <UploadForm />}
+                {action === "volvo" && <UploadForm endpointSuffix={action} />}
+                {action === "multialarm" && <UploadForm endpointSuffix={action} />}
             </CardContent>
         </Card>
     )

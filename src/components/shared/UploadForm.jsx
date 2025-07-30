@@ -5,11 +5,8 @@ import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { toast } from "sonner"
 import { useRef, useState } from "react";
-// import { useActionState, useEffect } from 'react'
-// import { useRouter } from 'next/navigation'
-// import { uploadInvoiceAction } from '@/lib/actions/invoice.actions'
 
-const UploadForm = () => {
+const UploadForm = ({ endpointSuffix }) => {
 
     const [isUploading, setIsUploading] = useState(false);
     const fileInputRef = useRef();
@@ -30,15 +27,13 @@ const UploadForm = () => {
         try {
 
             const response = await axios.post(
-                `${process.env.NEXT_PUBLIC_API_URL}/api/v1/upload/invoice/volvo`,
+                `${process.env.NEXT_PUBLIC_API_URL}/api/v1/upload/invoice/${endpointSuffix}`,
                 formData,
                 { responseType: "blob" }
             );
 
-            console.log(response.data);
-
             if (response.status === 200) {
-                let fileName = "volvo_invoice.xlsx";
+                let fileName = `${endpointSuffix}_invoice.xlsx`;
                 const contentDisposition = response.headers["content-disposition"];
                 if (contentDisposition) {
                     const match = contentDisposition.match(/filename="(.+)"/);
@@ -46,7 +41,7 @@ const UploadForm = () => {
                         fileName = match[1];
                     }
                 }
-                // Letöltés automatikusan
+
                 const url = window.URL.createObjectURL(response.data);
                 const link = document.createElement("a");
                 link.href = url;
@@ -57,7 +52,7 @@ const UploadForm = () => {
                 setTimeout(() => window.URL.revokeObjectURL(url), 100);
 
                 toast.success("A fájl sikeresen elkészült és letöltve.");
-                // Input ürítése
+
                 fileInputRef.current.value = "";
             } else {
                 const reader = new FileReader();
@@ -97,24 +92,6 @@ const UploadForm = () => {
 
     }
 
-    // const router = useRouter();
-
-    // const [data, action, isPending] = useActionState(uploadInvoiceAction, {
-    //     success: false,
-    //     message: '',
-    // });
-
-    // useEffect(() => {
-    //     if (data?.success) {
-    //         if (data.message) {
-    //             toast.success(data.message);
-    //             router.refresh();
-    //         }
-    //     } else if (data?.message) {
-    //         toast.error(data.message);
-    //     }
-    // }, [data]);
-
     const SubmitButton = () => {
         return (
             <div className=''>
@@ -137,9 +114,6 @@ const UploadForm = () => {
                             ref={fileInputRef}
                             disabled={isUploading}
                         />
-                        {/* {data && !data.success && data.message && (
-                            <span className='text-xs text-destructive text-left pl-3'>{data.message}</span>
-                        )} */}
                     </div>
                 </div>
                 <SubmitButton />
