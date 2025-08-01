@@ -28,3 +28,20 @@ export const newEmailSchema = z.object({
         errorMap: () => ({ message: "Csak 'Címzett' vagy 'Másolat' lehet!" })
     })
 });
+
+export const emailSchema = z.object({
+    recipient: z.email("Kérlek, adj meg egy érvényes e-mail címet!"),
+    subject: z
+        .string()
+        .min(6, "A tárgy legalább 6 karakter legyen!")
+        .max(30, "A tárgy legfeljebb 30 karakter lehet!"),
+    message: z
+        .string()
+        .min(12, "Az üzenet legalább 12 karakter legyen!")
+        .max(100, "Az üzenet legfeljebb 100 karakter lehet!"),
+    attachment: z
+        .file()
+        .refine((file) => file.size > 0, "A fájl nem lehet üres")
+        .refine((file) => file.type === 'application/pdf' || file.name.endsWith('.pdf'), "Csak PDF fájl tölthető fel!")
+
+});
