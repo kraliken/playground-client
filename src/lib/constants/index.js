@@ -1,4 +1,4 @@
-import { ChevronsLeftRightEllipsis, CloudUpload, FileOutput, FileSpreadsheet, Mail, Send, UserPen } from "lucide-react";
+import { BookOpen, ChevronsLeftRightEllipsis, CloudUpload, FileDigit, FileOutput, FileSpreadsheet, Mail, Send, Smartphone, UserPen } from "lucide-react";
 
 export const taskListLinks = [
     {
@@ -55,6 +55,20 @@ export const nijhofListLinks = [
         label: "Volvo",
         icon: <CloudUpload />,
         href: "/task/upload/volvo",
+        colorKey: "",
+    }
+]
+export const esselteListLinks = [
+    {
+        label: "Vodafone",
+        icon: <Smartphone />,
+        href: "/task/upload/vodafone",
+        colorKey: "",
+    },
+    {
+        label: "Adatbázis",
+        icon: <FileDigit />,
+        href: "/task/upload/vodafone/database",
         colorKey: "",
     }
 ]
