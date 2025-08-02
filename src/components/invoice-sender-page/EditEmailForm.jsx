@@ -28,7 +28,7 @@ const EditEmailForm = ({ email, onOpenChange }) => {
         if (data?.success) {
             if (data.message) {
                 toast.success(data.message);
-                router.refresh();
+                // router.refresh();
                 onOpenChange()
             }
         } else if (data?.message) {

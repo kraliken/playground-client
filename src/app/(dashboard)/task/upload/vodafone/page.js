@@ -4,7 +4,7 @@ import SendEmailFormContainer from "@/components/shared/send-email-form/SendEmai
 const VodafoneInvoiceUploadPage = () => {
     return (
         <div className="flex flex-col gap-4">
-            <PageHeader title="Vodafone számla feltöltés" action="vodafone" />
+            <PageHeader title="Adatok kinyerése - Vodafone" action="vodafone" />
             <SendEmailFormContainer />
         </div>
     )

@@ -35,6 +35,7 @@ export async function getMappingTableAction() {
     }
 
 }
+
 export async function sendEmailAction(prevState, formData) {
 
     const rawFormData = Object.fromEntries(formData)
@@ -48,7 +49,7 @@ export async function sendEmailAction(prevState, formData) {
 
     try {
 
-        await axios.post(`${BASE_URL}/api/v1/upload/send/vodafone`, formData);
+        await axios.post(`${BASE_URL}/api/v1/esselte/send/vodafone`, formData);
 
         return {
             success: true,

@@ -11,7 +11,7 @@ import {
     SidebarMenuItem,
     SidebarSeparator,
 } from "@/components/ui/sidebar"
-import { esselteListLinks, nijhofListLinks, taskListLinks } from "@/lib/constants";
+import { aerozoneListLinks, esselteListLinks, nijhofListLinks, taskListLinks } from "@/lib/constants";
 import { ChevronDown, Code } from "lucide-react";
 import Link from "next/link";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
@@ -164,18 +164,18 @@ export async function AppSidebar() {
                         </CollapsibleContent>
                     </SidebarGroup>
                 </Collapsible> */}
-                {/* <Collapsible defaultOpen className="group/collapsible">
+                <Collapsible defaultOpen className="group/collapsible">
                     <SidebarGroup>
                         <SidebarGroupLabel asChild>
                             <CollapsibleTrigger>
-                                Számlakiküldés
+                                Aerozone
                                 <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                             </CollapsibleTrigger>
                         </SidebarGroupLabel>
                         <CollapsibleContent>
                             <SidebarGroupContent>
                                 <SidebarMenu>
-                                    {taskListLinks.map(task => (
+                                    {aerozoneListLinks.map(task => (
                                         <SidebarMenuItem key={task.label}>
                                             <SidebarMenuButton asChild>
                                                 <Link href={task.href}>
@@ -189,7 +189,7 @@ export async function AppSidebar() {
                             </SidebarGroupContent>
                         </CollapsibleContent>
                     </SidebarGroup>
-                </Collapsible> */}
+                </Collapsible>
             </SidebarContent>
             <SidebarFooter>
                 {/* <SidebarMenu>

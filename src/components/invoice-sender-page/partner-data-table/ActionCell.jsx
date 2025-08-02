@@ -107,21 +107,6 @@ const ActionsCell = ({ row }) => {
                 isOpen={isAddCarbonCopyDialogOpen}
                 onOpenChange={() => setIsAddCarbonCopyDialogOpen(false)}
             />
-            {/*
-            <TodoViewDialog
-                todo={row.original}
-                isOpen={isTodoViewOpen}
-                onOpenChange={setIsTodoViewOpen}
-            />
-
-            <EditTodoSheet
-                title="Edit Todo"
-                triggerLabel="Edit"
-                isOpen={isEditSheetOpen}
-                onOpenChange={setIsEditSheetOpen}
-            >
-                <EditTodoForm todo={row.original} />
-            </EditTodoSheet> */}
         </div>
     );
 };

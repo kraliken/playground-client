@@ -6,7 +6,7 @@ const BASE_URL = process.env.BASE_URL
 
 export async function getLinkEmailToPartnerAction() {
     try {
-        const { data } = await axios.get(`${BASE_URL}/api/v1/connection/all`);
+        const { data } = await axios.get(`${BASE_URL}/api/v1/aerozone/connection/all`);
         return data;
     } catch (error) {
         console.error('Kapcsolatok lekérdezési hiba:', error);
@@ -32,7 +32,7 @@ export async function createLinkEmailToPartnerAction(prevState, formData) {
     }
 
     try {
-        const res = await axios.post(`${BASE_URL}/api/v1/connection/create?partner_id=${partner_id}&email_id=${email_id}`);
+        const res = await axios.post(`${BASE_URL}/api/v1/aerozone/connection/create?partner_id=${partner_id}&email_id=${email_id}`);
         return {
             success: true,
             message: 'A kapcsolat sikeresen létrejött!',
@@ -52,7 +52,7 @@ export async function createLinkEmailToPartnerAction(prevState, formData) {
 
 export async function deleteConnectionAction(emailId, partnerId) {
     try {
-        const { data } = await axios.delete(`${BASE_URL}/api/v1/connection/delete`, {
+        const { data } = await axios.delete(`${BASE_URL}/api/v1/aerozone/connection/delete`, {
             params: {
                 email_id: emailId,
                 partner_id: partnerId

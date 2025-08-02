@@ -6,6 +6,7 @@ import Loading from "./loading"
 import { partnerColumns } from "@/components/invoice-sender-page/partner-data-table/partner-columns"
 
 const PartnersPage = () => {
+
     return (
         <div className="flex flex-col gap-4">
             <Suspense fallback={<Loading />}>

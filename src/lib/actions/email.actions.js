@@ -9,9 +9,7 @@ const BASE_URL = process.env.BASE_URL
 
 export async function getEmailsAction() {
     try {
-        // await new Promise(resolve => setTimeout(resolve, 2000));
-
-        const { data } = await axios.get(`${BASE_URL}/api/v1/emails/all`);
+        const { data } = await axios.get(`${BASE_URL}/api/v1/aerozone/emails/all`);
         return data;
     } catch (error) {
         console.error('Emailek lekérdezési hiba:', error);
@@ -34,7 +32,7 @@ export async function createEmailAction(prevState, formData) {
     }
 
     try {
-        const response = await axios.post(`${BASE_URL}/api/v1/email/create`, rawFormData,
+        const response = await axios.post(`${BASE_URL}/api/v1/aerozone/email/create`, rawFormData,
             { headers: { "Content-Type": "application/json" } })
 
         revalidatePath('/task/invoice-sender/emails')
@@ -58,7 +56,7 @@ export async function createEmailAction(prevState, formData) {
 
 export async function deleteEmailAction(emailId) {
     try {
-        const { data } = await axios.delete(`${BASE_URL}/api/v1/email/${emailId}`);
+        const { data } = await axios.delete(`${BASE_URL}/api/v1/aerozone/email/${emailId}`);
         return data;
     } catch (error) {
         console.error('Email törlési hiba:', error);
@@ -80,8 +78,10 @@ export async function updateEmailAction(prevState, emailId, formData) {
     }
 
     try {
-        const { data } = await axios.patch(`${BASE_URL}/api/v1/email/${emailId}`, rawFormData,
+        const { data } = await axios.patch(`${BASE_URL}/api/v1/aerozone/email/${emailId}`, rawFormData,
             { headers: { "Content-Type": "application/json" } })
+
+        revalidatePath('/task/invoice-sender/emails')
 
         return {
             success: true,
@@ -100,7 +100,7 @@ export async function updateEmailAction(prevState, emailId, formData) {
 
 export async function getAvailabRecipients(partnerId, type = "to") {
     try {
-        const { data } = await axios.get(`${BASE_URL}/api/v1/emails/available-${type}/${partnerId}`);
+        const { data } = await axios.get(`${BASE_URL}/api/v1/aerozone/emails/available/${partnerId}?type=${type}`);
         return data;
     } catch (error) {
         console.error('Elérhető címzettek lekérdezési hiba:', error);

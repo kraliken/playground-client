@@ -8,7 +8,7 @@ const BASE_URL = process.env.BASE_URL
 
 export async function getUploadInvoicesAction() {
     try {
-        const { data } = await axios.get(`${BASE_URL}/api/v1/invoices/all`);
+        const { data } = await axios.get(`${BASE_URL}/api/v1/aerozone/invoices/all`);
         return data;
     } catch (error) {
         console.error('Számlák lekérdezési hiba:', error);
@@ -30,7 +30,7 @@ export async function uploadInvoicesAction(prevData, formData) {
 
     try {
         const { data } = await axios.post(
-            `${BASE_URL}/api/v1/upload/invoices`,
+            `${BASE_URL}/api/v1/aerozone/upload/invoices`,
             formData
         );
         return {
@@ -78,7 +78,7 @@ export async function uploadInvoiceAction(prevData, formData) {
 
 export async function sendCompleteInvoicesAction() {
     try {
-        const { data } = await axios.get(`${BASE_URL}/api/v1/invoices/send`);
+        const { data } = await axios.get(`${BASE_URL}/api/v1/aerozone/invoices/send`);
         return {
             success: data.success,
             message: data.message,
@@ -94,7 +94,7 @@ export async function sendCompleteInvoicesAction() {
 
 export async function deleteInvoicesAction() {
     try {
-        const { data } = await axios.delete(`${BASE_URL}/api/v1/invoices/delete`);
+        const { data } = await axios.delete(`${BASE_URL}/api/v1/aerozone/invoices/delete`);
         return {
             success: data.success,
             message: data.message,

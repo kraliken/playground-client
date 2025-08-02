@@ -1,6 +1,6 @@
 import { BookOpen, ChevronsLeftRightEllipsis, CloudUpload, FileDigit, FileOutput, FileSpreadsheet, Mail, Send, Smartphone, UserPen } from "lucide-react";
 
-export const taskListLinks = [
+export const aerozoneListLinks = [
     {
         label: "Feltöltés",
         icon: <CloudUpload />,
