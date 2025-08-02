@@ -11,9 +11,9 @@ const SendIncoicesPage = async () => {
     const disabledButton = complete?.length === 0
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 pb-4">
             <Suspense fallback={<Loading />}>
-                <PageHeader title="Számlaküldés" action="send" disabledButton={disabledButton} />
+                <PageHeader title="Vevő számlák kiküldése" action="send" disabledButton={disabledButton} />
                 <DataTable columns={completeColumns} data={complete} emptyTableMessage="Nincsenek küldhető számlák" />
             </Suspense>
         </div>

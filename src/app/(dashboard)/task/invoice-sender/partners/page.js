@@ -8,7 +8,7 @@ import { partnerColumns } from "@/components/invoice-sender-page/partner-data-ta
 const PartnersPage = () => {
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 pb-4">
             <Suspense fallback={<Loading />}>
                 <PageHeader title="Partnerek" action="partner" />
                 <DataTableContainer

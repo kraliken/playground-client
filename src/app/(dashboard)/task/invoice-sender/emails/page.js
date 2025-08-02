@@ -7,7 +7,7 @@ import { emailColumns } from "@/components/invoice-sender-page/email-data-table/
 
 const EmailsPage = () => {
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 pb-4">
             <Suspense fallback={<Loading />}>
                 <PageHeader title="E-mailek" action="email" />
                 <DataTableContainer

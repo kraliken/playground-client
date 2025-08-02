@@ -7,7 +7,7 @@ import { getLinkEmailToPartnerAction } from '@/lib/actions/connection.actions'
 
 const ConnectionsPage = () => {
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 pb-4">
             <Suspense fallback={<Loading />}>
                 <PageHeader title="Kapcsolatok" action="connect" />
                 <DataTableContainer

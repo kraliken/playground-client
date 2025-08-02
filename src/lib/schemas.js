@@ -45,3 +45,14 @@ export const emailSchema = z.object({
         .refine((file) => file.type === 'application/pdf' || file.name.endsWith('.pdf'), "Csak PDF fájl tölthető fel!")
 
 });
+
+export const vendorEmailSchema = z.object({
+    subject: z
+        .string()
+        .min(6, "A tárgy legalább 6 karakter legyen!")
+        .max(30, "A tárgy legfeljebb 30 karakter lehet!"),
+    message: z
+        .string()
+        .min(12, "Az üzenet legalább 12 karakter legyen!")
+        .max(100, "Az üzenet legfeljebb 100 karakter lehet!"),
+});

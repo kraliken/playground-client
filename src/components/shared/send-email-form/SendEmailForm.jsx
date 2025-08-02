@@ -22,7 +22,7 @@ const SendEmailForm = () => {
 
     useEffect(() => {
         if (data.success) {
-            toast.success(data.message || 'Todo created successfully!');
+            toast.success(data.message || 'A számlák sikeresen kiküldve!');
 
             // router.refresh()
         }
@@ -33,7 +33,6 @@ const SendEmailForm = () => {
             <div className='mt-8 flex justify-end gap-4'>
                 <Button disabled={isPending} className='' variant='default' type="submit">
                     {isPending ? 'Küldés...' : 'Küldés'}
-
                 </Button>
             </div>
         );
@@ -41,7 +40,7 @@ const SendEmailForm = () => {
 
     return (
         <>
-            <form action={action} className="flex flex-col h-full gap-4 p">
+            <form action={action} className="flex flex-col h-full gap-4">
                 <div className="flex h-full gap-4">
                     <div className="flex-1 flex flex-col h-full gap-3">
                         <div className='space-y-4'>

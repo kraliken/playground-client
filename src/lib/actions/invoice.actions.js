@@ -1,7 +1,7 @@
 "use server"
 
 import axios from 'axios';
-import { invoiceSchema } from '../schemas';
+import { invoiceSchema, vendorEmailSchema } from '../schemas';
 import * as z from "zod/v4";
 
 const BASE_URL = process.env.BASE_URL
@@ -76,18 +76,32 @@ export async function uploadInvoiceAction(prevData, formData) {
     }
 }
 
-export async function sendCompleteInvoicesAction() {
+export async function sendCompleteInvoicesAction(prevData, formData) {
+
+    const rawFormData = Object.fromEntries(formData)
+
+    const result = vendorEmailSchema.safeParse(rawFormData);
+
+    if (!result.success) {
+        const { fieldErrors } = z.flattenError(result.error);
+        return { success: false, errors: fieldErrors, data: rawFormData };
+    }
+
     try {
-        const { data } = await axios.get(`${BASE_URL}/api/v1/aerozone/invoices/send`);
+        const { data } = await axios.post(`${BASE_URL}/api/v1/aerozone/invoices/send`, formData);
         return {
             success: data.success,
             message: data.message,
+            errors: {},
+            data: {}
         };
     } catch (error) {
         console.error("Küldési hiba:", error);
         return {
             success: false,
-            message: "Nem sikerült elindítani a számlák kiküldését."
+            message: "Nem sikerült elindítani a számlák kiküldését.",
+            errors: {},
+            data: rawFormData
         };
     }
 }
