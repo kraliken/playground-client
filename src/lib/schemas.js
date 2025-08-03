@@ -16,6 +16,12 @@ export const invoiceSchema = z.object({
         .nonempty("Legalább egy PDF-et válassz ki!")
         .refine((files) => files.every(file => file.size > 0), "Nem lehet üres fájlokat feltölteni")
 })
+export const invoiceDataSchema = z.object({
+    invoice: z.file()
+        .refine((file) => file.size > 0, "A fájl nem lehet üres")
+        .refine((file) => file.name !== 'undefined', "Érvényes fájlnevet kell megadni")
+        .refine((file) => file.type === 'application/pdf' || file.name.endsWith('.pdf'), "Csak PDF fájl tölthető fel!")
+})
 
 export const newPartnerSchema = z.object({
     name: z

@@ -28,7 +28,7 @@ export async function signInAction(prevState, formData) {
         const cookieStore = await cookies();
 
         cookieStore.set('access_token', access_token, {
-            domain: '.kraliknorbert.com',
+            // domain: '.kraliknorbert.com',
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax',
@@ -37,7 +37,7 @@ export async function signInAction(prevState, formData) {
         });
 
         cookieStore.set('user', JSON.stringify(user), {
-            domain: '.kraliknorbert.com',  // Ez is!
+            // domain: '.kraliknorbert.com',  // Ez is!
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax',  // 'strict' helyett 'lax'

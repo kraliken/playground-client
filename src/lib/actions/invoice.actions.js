@@ -2,10 +2,99 @@
 
 import axios from 'axios';
 import { cookies } from 'next/headers'
-import { invoiceSchema, vendorEmailSchema } from '../schemas';
+import { invoiceDataSchema, invoiceSchema, vendorEmailSchema } from '../schemas';
 import * as z from "zod/v4";
 
 const BASE_URL = process.env.BASE_URL
+
+
+export async function uploadInvoiceAndExtractData(endpointSuffix, formData) {
+
+    console.log("START SERVER ACTION");
+
+    console.log(endpointSuffix);
+
+    const files = formData.get('file');
+    console.log("FILE", files);
+    const result = invoiceDataSchema.safeParse({ invoice: files });
+    console.log("RESULT", result);
+
+    if (!result.success) {
+        const { fieldErrors } = z.flattenError(result.error);
+        return { success: false, errors: fieldErrors };
+    }
+
+    try {
+        const cookieStore = await cookies();
+        const token = cookieStore.get('access_token')?.value;
+
+        if (!token) {
+            throw new Error('No token – the user is not logged in.');
+        }
+        console.log("TOKEN", token);
+
+        console.log("URL", `${BASE_URL}/api/v1/${endpointSuffix}`);
+
+        const response = await axios.post(
+            `${BASE_URL}/api/v1/${endpointSuffix}`,
+            formData,
+            {
+                headers: { 'Cookie': `access_token=${token}` },
+                responseType: 'arraybuffer',
+            }
+        );
+
+        let fileName = "invoice.xlsx";
+        const cd = response.headers["content-disposition"];
+        if (cd) {
+            const match = cd.match(/filename[^;=\n]*=((['"]).*?\2|[^;=\n]*)/);
+            if (match && match[1]) {
+                fileName = match[1].replace(/['"]/g, '');
+            }
+        }
+
+        const buffer = Buffer.from(response.data);
+        const base64Data = buffer.toString('base64');
+        const contentType = response.headers['content-type'] ||
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+
+        return {
+            success: true,
+            message: "A fájl sikeresen elkészült!",
+            data: {
+                fileName,
+                fileData: base64Data,
+                contentType,
+            },
+        };
+
+
+
+    } catch (error) {
+        let message = "Hiba történt a feltöltés során";
+        if (error.response) {
+            if (error.response.status === 401) message = "Nincs jogosultság. Jelentkezz be újra.";
+            if (error.response.status === 415) message = "Csak PDF fájl tölthető fel!";
+            if (error.response.status === 422) message = "PDF feldolgozása sikertelen.";
+            try {
+                const errorData = JSON.parse(Buffer.from(error.response.data).toString());
+                if (errorData?.detail) message = errorData.detail;
+            } catch { /* ignore */ }
+        }
+        return {
+            success: false,
+            errors: { general: [message] }
+        };
+    }
+
+    // } catch (error) {
+    //     console.error('Feltöltési hiba:', error);
+    //     return {
+    //         success: false,
+    //         errors: { general: ['Hiba történt a feltöltés során'] }
+    //     };
+    // }
+}
 
 export async function getUploadInvoicesAction() {
     try {
