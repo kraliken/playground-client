@@ -5,13 +5,14 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { sendEmailAction } from "@/lib/actions/vodafone.actions";
-import { useRouter } from "next/navigation";
-import { useActionState, useEffect } from "react";
+// import { useRouter } from "next/navigation";
+import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 const SendEmailForm = () => {
 
-    const router = useRouter()
+    // const router = useRouter()
+    const [hasSubmitted, setHasSubmitted] = useState(false);
 
     const [data, action, isPending] = useActionState(sendEmailAction, {
         success: false,
@@ -20,16 +21,22 @@ const SendEmailForm = () => {
         data: {}
     });
 
+    const handleAction = (formData) => {
+        setHasSubmitted(true);
+        action(formData);
+    }
+
     useEffect(() => {
-        console.log(data);
+        if (!hasSubmitted) return;
         if (data.success) {
             toast.success(data.message || 'A számlák sikeresen kiküldve!');
             // router.refresh()
         }
-        if (!data.success) {
+        if (!data.success && data.message) {
             toast.error(data.message || "Ismeretlen hiba történt");
         }
-    }, [data]);
+    }, [data.success, hasSubmitted]);
+
 
     const SubmitButton = () => {
         return (
@@ -43,7 +50,7 @@ const SendEmailForm = () => {
 
     return (
         <>
-            <form action={action} className="flex flex-col h-full gap-4">
+            <form action={handleAction} className="flex flex-col h-full gap-4">
                 <div className="flex h-full gap-4">
                     <div className="flex-1 flex flex-col h-full gap-3">
                         <div className='space-y-4'>
