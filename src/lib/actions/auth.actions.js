@@ -76,7 +76,7 @@ export async function signout() {
 
     const cookieStore = await cookies();
     const token = cookieStore.get("access_token");
-    const user = cookieStore.get("user_data");
+    const user = cookieStore.get("user");
 
     if (token) {
         cookieStore.set("access_token", "", { maxAge: -1, path: "/" });
