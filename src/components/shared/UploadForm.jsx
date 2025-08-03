@@ -29,7 +29,7 @@ const UploadForm = ({ endpointSuffix }) => {
             const response = await axios.post(
                 `${process.env.NEXT_PUBLIC_API_URL}/api/v1/${endpointSuffix}`,
                 formData,
-                { responseType: "blob" }
+                { responseType: "blob", withCredentials: true }
             );
 
             if (response.status === 200) {

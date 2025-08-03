@@ -1,6 +1,7 @@
 "use server"
 
 import axios from 'axios';
+import { cookies } from 'next/headers'
 import { emailSchema } from '../schemas';
 import * as z from "zod/v4";
 
@@ -9,7 +10,19 @@ const BASE_URL = process.env.BASE_URL
 export async function getPhoneBookAction() {
 
     try {
-        const { data } = await axios.get(`${BASE_URL}/api/v1/esselte/phonebook`);
+        const cookieStore = await cookies();
+        const token = cookieStore.get('access_token')?.value;
+
+        if (!token) {
+            throw new Error('No token – the user is not logged in.');
+        }
+
+        const { data } = await axios.get(`${BASE_URL}/api/v1/esselte/phonebook`, {
+            headers: {
+                'Cookie': `access_token=${token}`
+            },
+            withCredentials: true,
+        });
         return data;
     } catch (error) {
         console.error('Telefonkönyv lekérdezési hiba:', error);
@@ -22,9 +35,20 @@ export async function getPhoneBookAction() {
 }
 
 export async function getMappingTableAction() {
-
     try {
-        const { data } = await axios.get(`${BASE_URL}/api/v1/esselte/teszor-mapping`);
+        const cookieStore = await cookies();
+        const token = cookieStore.get('access_token')?.value;
+
+        if (!token) {
+            throw new Error('No token – the user is not logged in.');
+        }
+
+        const { data } = await axios.get(`${BASE_URL}/api/v1/esselte/teszor-mapping`, {
+            headers: {
+                'Cookie': `access_token=${token}`
+            },
+            withCredentials: true,
+        });
         return data;
     } catch (error) {
         console.error('Mapping tábla lekérdezési hiba:', error);
@@ -33,13 +57,11 @@ export async function getMappingTableAction() {
             message: 'Nem sikerült lekérdezni a mapping táblát. Kérjük, próbáld meg később újra.'
         };
     }
-
 }
 
 export async function sendEmailAction(prevState, formData) {
 
     const rawFormData = Object.fromEntries(formData)
-
     const result = emailSchema.safeParse(rawFormData);
 
     if (!result.success) {
@@ -49,7 +71,19 @@ export async function sendEmailAction(prevState, formData) {
 
     try {
 
-        await axios.post(`${BASE_URL}/api/v1/esselte/send/vodafone`, formData);
+        const cookieStore = await cookies();
+        const token = cookieStore.get('access_token')?.value;
+
+        if (!token) {
+            throw new Error('No token – the user is not logged in.');
+        }
+
+        await axios.post(`${BASE_URL}/api/v1/esselte/send/vodafone`, formData, {
+            headers: {
+                'Cookie': `access_token=${token}`
+            },
+            withCredentials: true,
+        });
 
         return {
             success: true,
@@ -57,7 +91,6 @@ export async function sendEmailAction(prevState, formData) {
             errors: {},
             data: {}
         };
-
     } catch (error) {
         console.error('Email küldésnél hiba:', error);
         return {
@@ -67,5 +100,4 @@ export async function sendEmailAction(prevState, formData) {
             data: rawFormData
         };
     }
-
 }

@@ -1,6 +1,7 @@
 "use server"
 
 import axios from 'axios';
+import { cookies } from 'next/headers'
 import { invoiceSchema, vendorEmailSchema } from '../schemas';
 import * as z from "zod/v4";
 
@@ -8,7 +9,19 @@ const BASE_URL = process.env.BASE_URL
 
 export async function getUploadInvoicesAction() {
     try {
-        const { data } = await axios.get(`${BASE_URL}/api/v1/aerozone/invoices/all`);
+        const cookieStore = await cookies();
+        const token = cookieStore.get('access_token')?.value;
+
+        if (!token) {
+            throw new Error('No token – the user is not logged in.');
+        }
+
+        const { data } = await axios.get(`${BASE_URL}/api/v1/aerozone/invoices/all`, {
+            headers: {
+                'Cookie': `access_token=${token}`
+            },
+            withCredentials: true,
+        });
         return data;
     } catch (error) {
         console.error('Számlák lekérdezési hiba:', error);
@@ -29,9 +42,21 @@ export async function uploadInvoicesAction(prevData, formData) {
     }
 
     try {
+        const cookieStore = await cookies();
+        const token = cookieStore.get('access_token')?.value;
+
+        if (!token) {
+            throw new Error('No token – the user is not logged in.');
+        }
+
         const { data } = await axios.post(
             `${BASE_URL}/api/v1/aerozone/upload/invoices`,
-            formData
+            formData, {
+            headers: {
+                'Cookie': `access_token=${token}`
+            },
+            withCredentials: true,
+        }
         );
         return {
             success: data.success,
@@ -58,9 +83,21 @@ export async function uploadInvoiceAction(prevData, formData) {
     }
 
     try {
+        const cookieStore = await cookies();
+        const token = cookieStore.get('access_token')?.value;
+
+        if (!token) {
+            throw new Error('No token – the user is not logged in.');
+        }
+
         const { data } = await axios.post(
             `${BASE_URL}/api/v1/upload/invoice/volvo`,
-            formData
+            formData, {
+            headers: {
+                'Cookie': `access_token=${token}`
+            },
+            withCredentials: true,
+        }
         );
         return {
             success: data.success,
@@ -88,7 +125,19 @@ export async function sendCompleteInvoicesAction(prevData, formData) {
     }
 
     try {
-        const { data } = await axios.post(`${BASE_URL}/api/v1/aerozone/invoices/send`, formData);
+        const cookieStore = await cookies();
+        const token = cookieStore.get('access_token')?.value;
+
+        if (!token) {
+            throw new Error('No token – the user is not logged in.');
+        }
+
+        const { data } = await axios.post(`${BASE_URL}/api/v1/aerozone/invoices/send`, formData, {
+            headers: {
+                'Cookie': `access_token=${token}`
+            },
+            withCredentials: true,
+        });
         return {
             success: data.success,
             message: data.message,
@@ -108,7 +157,20 @@ export async function sendCompleteInvoicesAction(prevData, formData) {
 
 export async function deleteInvoicesAction() {
     try {
-        const { data } = await axios.delete(`${BASE_URL}/api/v1/aerozone/invoices/delete`);
+        const cookieStore = await cookies();
+        const token = cookieStore.get('access_token')?.value;
+
+        if (!token) {
+            throw new Error('No token – the user is not logged in.');
+        }
+
+        const { data } = await axios.delete(`${BASE_URL}/api/v1/aerozone/invoices/delete`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Cookie': `access_token=${token}`
+            },
+            withCredentials: true,
+        });
         return {
             success: data.success,
             message: data.message,

@@ -21,12 +21,15 @@ const SendEmailForm = () => {
     });
 
     useEffect(() => {
+        console.log(data);
         if (data.success) {
             toast.success(data.message || 'A számlák sikeresen kiküldve!');
-
             // router.refresh()
         }
-    }, [data.success]);
+        if (!data.success) {
+            toast.error(data.message || "Ismeretlen hiba történt");
+        }
+    }, [data]);
 
     const SubmitButton = () => {
         return (

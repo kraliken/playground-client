@@ -81,7 +81,7 @@ export async function signout() {
     if (token) {
         cookieStore.set("access_token", "", { maxAge: -1, path: "/" });
         if (user) {
-            cookieStore.set("user_data", "", { maxAge: -1, path: "/" });
+            cookieStore.set("user", "", { maxAge: -1, path: "/" });
         }
     }
 
