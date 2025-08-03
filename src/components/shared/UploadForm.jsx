@@ -49,19 +49,12 @@ const UploadForm = ({ endpointSuffix }) => {
                 document.body.removeChild(link);
                 setTimeout(() => window.URL.revokeObjectURL(url), 100);
 
-                toast.success("A fájl sikeresen elkészült!");
-                // toast.success(result.message);
+                toast.success(result.message || "A fájl sikeresen elkészült!");
                 fileInputRef.current.value = "";
 
             } else {
-                // zod error vagy szerver error
-                if (result.errors?.general) {
-                    console.log(result.errors.general[0]);
-                    toast.error("Általános hiba történt.");
-                    // toast.error(result.errors.general[0]);
-                } else if (result.errors?.file) {
-                    toast.error("Fájlfeltöltési hiba.");
-                    // toast.error(result.errors.file[0]);
+                if (result.errors?.invoice) {
+                    toast.error(result.errors.invoice[0] || "Fájlfeltöltési hiba.");
                 } else {
                     toast.error("Ismeretlen hiba történt");
                 }
@@ -71,64 +64,6 @@ const UploadForm = ({ endpointSuffix }) => {
         } finally {
             setIsUploading(false);
         }
-
-        //     if (response.status === 200) {
-        //         let fileName = `${endpointSuffix}_invoice.xlsx`;
-        //         const contentDisposition = response.headers["content-disposition"];
-        //         if (contentDisposition) {
-        //             const match = contentDisposition.match(/filename="(.+)"/);
-        //             if (match && match[1]) {
-        //                 fileName = match[1];
-        //             }
-        //         }
-
-        //         const url = window.URL.createObjectURL(response.data);
-        //         const link = document.createElement("a");
-        //         link.href = url;
-        //         link.setAttribute("download", fileName);
-        //         document.body.appendChild(link);
-        //         link.click();
-        //         link.remove();
-        //         setTimeout(() => window.URL.revokeObjectURL(url), 100);
-
-        //         toast.success("A fájl sikeresen elkészült és letöltve.");
-
-        //         fileInputRef.current.value = "";
-        //     } else {
-        //         const reader = new FileReader();
-        //         reader.onload = () => {
-        //             try {
-        //                 const json = JSON.parse(reader.result);
-        //                 toast.error(json.detail || "Ismeretlen hiba történt");
-        //             } catch {
-        //                 toast.error("Ismeretlen hiba történt (nem JSON válasz)");
-        //             }
-        //         };
-        //         reader.readAsText(response.data);
-        //     }
-
-        // } catch (error) {
-        //     let message = "Hiba történt a feltöltés során";
-        //     if (error.response && error.response.data) {
-        //         const reader = new FileReader();
-        //         reader.onload = () => {
-        //             try {
-        //                 const json = JSON.parse(reader.result);
-        //                 if (json.detail) {
-        //                     message = json.detail;
-        //                 }
-        //                 toast.error(message);
-        //             } catch {
-        //                 toast.error(message);
-        //             }
-        //         };
-        //         reader.readAsText(error.response.data);
-        //     } else {
-        //         toast.error(message);
-        //     }
-        // } finally {
-        //     setIsUploading(false);
-        // }
 
     }
 

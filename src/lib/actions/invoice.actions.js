@@ -10,14 +10,8 @@ const BASE_URL = process.env.BASE_URL
 
 export async function uploadInvoiceAndExtractData(endpointSuffix, formData) {
 
-    console.log("START SERVER ACTION");
-
-    console.log(endpointSuffix);
-
     const files = formData.get('file');
-    console.log("FILE", files);
     const result = invoiceDataSchema.safeParse({ invoice: files });
-    console.log("RESULT", result);
 
     if (!result.success) {
         const { fieldErrors } = z.flattenError(result.error);
@@ -31,10 +25,6 @@ export async function uploadInvoiceAndExtractData(endpointSuffix, formData) {
         if (!token) {
             throw new Error('No token – the user is not logged in.');
         }
-        console.log("TOKEN", token);
-
-        console.log("URL", `${BASE_URL}/api/v1/${endpointSuffix}`);
-
         const response = await axios.post(
             `${BASE_URL}/api/v1/${endpointSuffix}`,
             formData,

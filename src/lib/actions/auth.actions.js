@@ -28,21 +28,15 @@ export async function signInAction(prevState, formData) {
         const cookieStore = await cookies();
 
         cookieStore.set('access_token', access_token, {
-            // domain: '.kraliknorbert.com',
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax',
-            // maxAge: 60 * 60 * 24 * 7,
-            // path: '/'
         });
 
         cookieStore.set('user', JSON.stringify(user), {
-            // domain: '.kraliknorbert.com',  // Ez is!
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax',  // 'strict' helyett 'lax'
-            // maxAge: 60 * 60 * 24 * 7, // 7 nap
-            // path: '/'
         });
 
     } catch (error) {
