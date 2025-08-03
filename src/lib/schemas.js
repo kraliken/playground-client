@@ -2,6 +2,11 @@ import { z } from "zod/v4";
 
 const taxNumberRegex = /^\d{8}-\d-\d{2}$/;
 
+export const signInFormSchema = z.object({
+    username: z.string().min(4, 'Username must be at least 4 characters'),
+    password: z.string().min(6, 'Password must be at least 6 characters'),
+});
+
 export const invoiceSchema = z.object({
     invoices: z.array(z.file()
         .refine((file) => file.size > 0, "A fájl nem lehet üres")

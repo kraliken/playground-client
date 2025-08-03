@@ -12,15 +12,18 @@ import {
     SidebarSeparator,
 } from "@/components/ui/sidebar"
 import { aerozoneListLinks, esselteListLinks, nijhofListLinks, taskListLinks } from "@/lib/constants";
-import { ChevronDown, Code } from "lucide-react";
+import { ChevronDown, ChevronUp, Code, LogOut, User2 } from "lucide-react";
 import Link from "next/link";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
+import { cookies } from 'next/headers';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import { signout } from "@/lib/actions/auth.actions";
 
 export async function AppSidebar() {
 
-    // const cookieStore = await cookies();
-    // const userData = cookieStore.get('user_data')?.value;
-    // const { username } = userData ? JSON.parse(userData) : null;
+    const cookieStore = await cookies();
+    const userData = cookieStore.get('user')?.value;
+    const { username } = userData ? JSON.parse(userData) : null;
 
     return (
         <Sidebar collapsible="icon">
@@ -192,7 +195,7 @@ export async function AppSidebar() {
                 </Collapsible>
             </SidebarContent>
             <SidebarFooter>
-                {/* <SidebarMenu>
+                <SidebarMenu>
                     <SidebarMenuItem>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
@@ -201,20 +204,20 @@ export async function AppSidebar() {
                                 </SidebarMenuButton>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                                <DropdownMenuItem asChild>
+                                {/* <DropdownMenuItem asChild>
                                     <Link href="/account/settings">
                                         <Settings />
                                         Settings
                                     </Link>
-                                </DropdownMenuItem>
+                                </DropdownMenuItem> */}
                                 <DropdownMenuItem onClick={signout}>
                                     <LogOut />
-                                    Sign out
+                                    Kilépés
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </SidebarMenuItem>
-                </SidebarMenu> */}
+                </SidebarMenu>
             </SidebarFooter>
 
         </Sidebar >

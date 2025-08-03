@@ -7,7 +7,7 @@ const Home = () => {
     <Suspense fallback={<CenterTitleSkeleton />}>
       <div className="flex min-h-[calc(100vh-68px)] justify-center items-center">
         <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">
-          Welcome to Playground!
+          Üdvözlünk a Playgroundon!
         </h1>
       </div>
     </Suspense>
