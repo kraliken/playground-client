@@ -24,12 +24,12 @@ const AreaChartComponent = ({ data }) => {
 
 
     return (
-        <Card className="flex flex-col h-full">
+        <Card className="flex flex-col">
             <CardHeader className="flex-shrink-0">
                 <CardTitle>Bevételek és kiadások</CardTitle>
             </CardHeader>
-            <CardContent className="pb-0">
-                <ChartContainer config={chartConfig} className="h-[220px] w-full">
+            <CardContent className="flex items-center justify-center">
+                <ChartContainer config={chartConfig} className="h-[200px] w-full">
                     <AreaChart accessibilityLayer data={data}>
                         <CartesianGrid vertical={false} />
                         <XAxis

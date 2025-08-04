@@ -26,7 +26,7 @@ const PieChartComponent = ({ data, partners }) => {
         } else {
             params.set("partner", newPartner);
         }
-        router.push(`?${params.toString()}`);
+        router.push(`?${params.toString()}`, { scroll: false });
     };
 
     const chartConfig = {
@@ -46,7 +46,7 @@ const PieChartComponent = ({ data, partners }) => {
     return (
         <Card className="flex flex-col">
             <CardHeader className="flex flex-row items-center">
-                <CardTitle className="flex-1">Kintlevőségek</CardTitle>
+                <CardTitle className="flex-1">Számlák összértéke állapot szerint</CardTitle>
                 <Select value={selectedPartner} onValueChange={handlePartnerChange}>
                     <SelectTrigger
                         aria-label="Select a value"
@@ -71,12 +71,12 @@ const PieChartComponent = ({ data, partners }) => {
                     </SelectContent>
                 </Select>
             </CardHeader>
-            <CardContent className="flex flex-1 justify-center pb-0">
+            <CardContent className="flex items-center justify-center">
                 <ChartContainer
                     config={chartConfig}
-                    className="h-[210px]"
+                    className="h-[185px] w-full"
                 >
-                    <PieChart>
+                    <PieChart className='h-full w-full'>
                         <ChartTooltip
                             cursor={false}
                             content={<ChartTooltipContent hideLabel />}
@@ -86,7 +86,7 @@ const PieChartComponent = ({ data, partners }) => {
                             dataKey="total_amount"
                             nameKey="status"
                             innerRadius={55}
-                            outerRadius={85}
+                            outerRadius={80}
                             strokeWidth={10}
                             activeIndex={1}
                             activeShape={({

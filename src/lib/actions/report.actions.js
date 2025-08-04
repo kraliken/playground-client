@@ -57,6 +57,32 @@ export async function getPartners() {
         };
     }
 }
+export async function getOverdueData() {
+
+    try {
+
+        const cookieStore = await cookies();
+        const token = cookieStore.get('access_token')?.value;
+
+        if (!token) {
+            throw new Error('No token – the user is not logged in.');
+        }
+        const { data } = await axios.get(`${BASE_URL}/api/v1/reports/overdue-by-partner`, {
+            headers: {
+                'Cookie': `access_token=${token}`
+            },
+            withCredentials: true,
+        });
+        return data;
+
+    } catch (error) {
+        console.error('Lejárt fizetendők lekérdezési hiba:', error);
+        return {
+            success: false,
+            message: 'Nem sikerült lekérdezni az adatokat a lejárt fizetendők összesítését. Kérjük, próbáld meg később újra.'
+        };
+    }
+}
 
 export async function getInvoiceStatusSummary(partner_name) {
     try {
