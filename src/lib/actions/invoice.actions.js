@@ -162,7 +162,7 @@ export async function uploadInvoicesAction(prevData, formData) {
             throw new Error('No token – the user is not logged in.');
         }
 
-        const fileChunks = chunkFilesBySize(files, MAX_BATCH_SIZE);
+        // const fileChunks = chunkFilesBySize(files, MAX_BATCH_SIZE);
 
         // // Itt logoljuk a chunkokat
         // fileChunks.forEach((chunk, i) => {
@@ -176,40 +176,40 @@ export async function uploadInvoicesAction(prevData, formData) {
         //     message: "Chunk méretek kiírva a logba (feltöltés nem történt meg)."
         // };
 
-        for (let i = 0; i < fileChunks.length; i++) {
-            const chunk = fileChunks[i];
-            const chunkFormData = new FormData();
-            chunk.forEach(file => chunkFormData.append('invoices', file));
+        // for (let i = 0; i < fileChunks.length; i++) {
+        //     const chunk = fileChunks[i];
+        //     const chunkFormData = new FormData();
+        //     chunk.forEach(file => chunkFormData.append('invoices', file));
 
-            // Ha kell, ide tehetsz batch-azonosítót (opcionális)
-            // chunkFormData.append('batchIndex', i);
+        //     // Ha kell, ide tehetsz batch-azonosítót (opcionális)
+        //     // chunkFormData.append('batchIndex', i);
 
-            const { data } = await axios.post(
-                `${BASE_URL}/api/v1/aerozone/upload/invoices`,
-                chunkFormData, {
-                headers: {
-                    'Cookie': `access_token=${token}`
-                },
-                withCredentials: true,
-            }
-            );
-            // Ha bármelyik batch errorral tér vissza, álljon meg
-            if (!data.success) {
-                return {
-                    success: false,
-                    errors: { general: [`Hiba történt a(z) ${i + 1}. batch feltöltésénél: ${data.message || 'Ismeretlen hiba'}`] }
-                };
-            }
-        }
+        //     const { data } = await axios.post(
+        //         `${BASE_URL}/api/v1/aerozone/upload/invoices`,
+        //         chunkFormData, {
+        //         headers: {
+        //             'Cookie': `access_token=${token}`
+        //         },
+        //         withCredentials: true,
+        //     }
+        //     );
+        //     // Ha bármelyik batch errorral tér vissza, álljon meg
+        //     if (!data.success) {
+        //         return {
+        //             success: false,
+        //             errors: { general: [`Hiba történt a(z) ${i + 1}. batch feltöltésénél: ${data.message || 'Ismeretlen hiba'}`] }
+        //         };
+        //     }
+        // }
 
-        // // const { data } = await axios.post(
-        // //     `${BASE_URL}/api/v1/aerozone/upload/invoices`,
-        // //     formData, {
-        // //     headers: {
-        // //         'Cookie': `access_token=${token}`
-        // //     },
-        // //     withCredentials: true,
-        // // });
+        const { data } = await axios.post(
+            `${BASE_URL}/api/v1/aerozone/upload/invoices`,
+            formData, {
+            headers: {
+                'Cookie': `access_token=${token}`
+            },
+            withCredentials: true,
+        });
 
         return {
             success: true,
