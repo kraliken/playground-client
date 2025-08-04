@@ -11,7 +11,7 @@ import {
     SidebarMenuItem,
     SidebarSeparator,
 } from "@/components/ui/sidebar"
-import { aerozoneListLinks, esselteListLinks, nijhofListLinks, taskListLinks } from "@/lib/constants";
+import { aerozoneListLinks, esselteListLinks, nijhofListLinks, reportListLinks, taskListLinks } from "@/lib/constants";
 import { ChevronDown, ChevronUp, Code, LogOut, User2 } from "lucide-react";
 import Link from "next/link";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible";
@@ -184,6 +184,32 @@ export async function AppSidebar() {
                                                 <Link href={task.href}>
                                                     {task.icon}
                                                     {task.label}
+                                                </Link>
+                                            </SidebarMenuButton>
+                                        </SidebarMenuItem>
+                                    ))}
+                                </SidebarMenu>
+                            </SidebarGroupContent>
+                        </CollapsibleContent>
+                    </SidebarGroup>
+                </Collapsible>
+                <Collapsible defaultOpen className="group/collapsible">
+                    <SidebarGroup>
+                        <SidebarGroupLabel asChild>
+                            <CollapsibleTrigger>
+                                Riportok
+                                <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                            </CollapsibleTrigger>
+                        </SidebarGroupLabel>
+                        <CollapsibleContent>
+                            <SidebarGroupContent>
+                                <SidebarMenu>
+                                    {reportListLinks.map(report => (
+                                        <SidebarMenuItem key={report.label}>
+                                            <SidebarMenuButton asChild>
+                                                <Link href={report.href}>
+                                                    {report.icon}
+                                                    {report.label}
                                                 </Link>
                                             </SidebarMenuButton>
                                         </SidebarMenuItem>

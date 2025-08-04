@@ -1,4 +1,4 @@
-import { BookOpen, ChevronsLeftRightEllipsis, CloudUpload, FileDigit, FileOutput, FileSpreadsheet, Mail, Send, Smartphone, UserPen } from "lucide-react";
+import { AreaChart, Banknote, BookOpen, Briefcase, ChevronsLeftRightEllipsis, CloudUpload, FileDigit, FileOutput, FileSpreadsheet, FileWarning, Mail, Send, Smartphone, UserPen } from "lucide-react";
 
 export const aerozoneListLinks = [
     {
@@ -71,4 +71,25 @@ export const esselteListLinks = [
         href: "/task/upload/vodafone/database",
         colorKey: "",
     }
+]
+
+export const reportListLinks = [
+    {
+        label: "Összesítő",
+        icon: <AreaChart />,
+        href: "/reports/summary ",
+        colorKey: "",
+    },
+    // {
+    //     label: "Kintlevőségek",
+    //     icon: <FileWarning />,
+    //     href: "/reports/invoice-status",
+    //     colorKey: "",
+    // },
+    // {
+    //     label: "Bérkültségek",
+    //     icon: <Banknote />,
+    //     href: "/reports/upload/vodafone/database",
+    //     colorKey: "",
+    // }
 ]
