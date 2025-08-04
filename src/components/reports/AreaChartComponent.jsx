@@ -79,7 +79,7 @@ const AreaChartComponent = ({ data }) => {
                             fill="url(#fillExpense)"
                             fillOpacity={0.4}
                             stroke="var(--color-expense)"
-0                        />
+                        />
                         <Area
                             dataKey="income"
                             type="natural"
