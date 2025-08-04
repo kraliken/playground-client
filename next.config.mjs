@@ -2,9 +2,12 @@
 const nextConfig = {
     experimental: {
         serverActions: {
-            bodySizeLimit: '10mb', // Növeld 10 MB-ra (vagy amennyire szükséged van)
+            bodySizeLimit: '10mb',
         },
     },
 };
+
+console.log("DEBUG: nextConfig at build time", nextConfig);
+
 
 export default nextConfig;
