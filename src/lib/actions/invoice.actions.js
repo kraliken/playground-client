@@ -7,6 +7,40 @@ import * as z from "zod/v4";
 
 const BASE_URL = process.env.BASE_URL
 
+const MAX_BATCH_SIZE = 900 * 1024;
+
+function chunkFilesBySize(files, maxBatchSize = MAX_BATCH_SIZE) {
+    const chunks = [];
+    let currentChunk = [];
+    let currentSize = 0;
+
+    for (const file of files) {
+        if (file.size > maxBatchSize) {
+            // Ha egy fájl nagyobb, mint a limit, önálló chunkban küldjük
+            if (currentChunk.length > 0) {
+                chunks.push(currentChunk);
+                currentChunk = [];
+                currentSize = 0;
+            }
+            chunks.push([file]);
+            continue;
+        }
+
+        if (currentSize + file.size > maxBatchSize) {
+            chunks.push(currentChunk);
+            currentChunk = [];
+            currentSize = 0;
+        }
+
+        currentChunk.push(file);
+        currentSize += file.size;
+    }
+    if (currentChunk.length > 0) {
+        chunks.push(currentChunk);
+    }
+    return chunks;
+}
+
 
 export async function uploadInvoiceAndExtractData(endpointSuffix, formData) {
 
@@ -128,19 +162,63 @@ export async function uploadInvoicesAction(prevData, formData) {
             throw new Error('No token – the user is not logged in.');
         }
 
-        const { data } = await axios.post(
-            `${BASE_URL}/api/v1/aerozone/upload/invoices`,
-            formData, {
-            headers: {
-                'Cookie': `access_token=${token}`
-            },
-            withCredentials: true,
+        const fileChunks = chunkFilesBySize(files, MAX_BATCH_SIZE);
+
+        // // Itt logoljuk a chunkokat
+        // fileChunks.forEach((chunk, i) => {
+        //     const totalSize = chunk.reduce((acc, file) => acc + file.size, 0);
+        //     console.log(`Chunk ${i + 1}: ${chunk.length} fájl, összesen ${(totalSize / 1024).toFixed(2)} KB`);
+        // });
+
+        // // A feltöltést most ne csináld, csak logold a chunkokat!
+        // return {
+        //     success: true,
+        //     message: "Chunk méretek kiírva a logba (feltöltés nem történt meg)."
+        // };
+
+        for (let i = 0; i < fileChunks.length; i++) {
+            const chunk = fileChunks[i];
+            const chunkFormData = new FormData();
+            chunk.forEach(file => chunkFormData.append('invoices', file));
+
+            // Ha kell, ide tehetsz batch-azonosítót (opcionális)
+            // chunkFormData.append('batchIndex', i);
+
+            const { data } = await axios.post(
+                `${BASE_URL}/api/v1/aerozone/upload/invoices`,
+                chunkFormData, {
+                headers: {
+                    'Cookie': `access_token=${token}`
+                },
+                withCredentials: true,
+            }
+            );
+            // Ha bármelyik batch errorral tér vissza, álljon meg
+            if (!data.success) {
+                return {
+                    success: false,
+                    errors: { general: [`Hiba történt a(z) ${i + 1}. batch feltöltésénél: ${data.message || 'Ismeretlen hiba'}`] }
+                };
+            }
         }
-        );
+
+        // // const { data } = await axios.post(
+        // //     `${BASE_URL}/api/v1/aerozone/upload/invoices`,
+        // //     formData, {
+        // //     headers: {
+        // //         'Cookie': `access_token=${token}`
+        // //     },
+        // //     withCredentials: true,
+        // // });
+
         return {
-            success: data.success,
-            message: data.message,
+            success: true,
+            message: "Minden számla sikeresen feltöltve.",
         };
+        // // return {
+        // //     success: data.success,
+        // //     message: data.message,
+        // // };
 
     } catch (error) {
         console.error('Feltöltési hiba:', error);
