@@ -30,4 +30,4 @@
 
 ### 4. Tömeges feldolgozás, küldés és törlés
 
-![Folyamatábra 2](flow-4_2.png)
+![Folyamatábra 2](flow-4.png)
