@@ -87,21 +87,24 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    A[📚 Tömeges PDF számla<br/>feltöltés] --> B[🔍 Adatok kinyerése]
-    B --> C[🛢️ Adatok kiegészítése<br/>adatbázisból]
-    C --> D[💾 Fájlok és adatok<br/>tárolása]
-    D --> E{Hiányzik adat?}
-    E -- Igen --> F[Adatpótlás<br/>DB frissítés]
-    F --> G[📤 Tömeges e-mail küldés]
-    E -- Nem --> G
-    G --> H[🗑️ Fájlok, adatok törlése<br/>sikeres küldés után]
+    A[📚 Tömeges PDF számla<br/>feltöltés] --> B[🚀 API hívás]
+    B --> C[🔍 Adatok kinyerése]
+    C --> D[🛢️ Adatok kiegészítése<br/>adatbázisból]
+    D --> E[💾 Fájlok és adatok<br/>tárolása]
+    E --> F{Hiányzik adat?}
+    F -- Igen --> G[Adatpótlás<br/>DB frissítés]
+    G --> H[📤 Tömeges e-mail küldés]
+    F -- Nem --> H
+    H --> I[🗑️ Fájlok, adatok törlése<br/>sikeres küldés után]
 
     style A fill:#e1f5fe
     style B fill:#ffe0b2
     style C fill:#ffe0b2
     style D fill:#ffe0b2
-    style E fill:#fff9c4
+    style E fill:#ffe0b2
+    style F fill:#fff9c4
     style F fill:#fce4ec
     style G fill:#e8f5e9
-    style H fill:#f5f5f5
+    style H fill:#ffe0b2
+    style I fill:#e8f5e9
 ```
