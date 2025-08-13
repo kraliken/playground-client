@@ -21,9 +21,9 @@ import { signout } from "@/lib/actions/auth.actions";
 
 export async function AppSidebar() {
 
-    const cookieStore = await cookies();
-    const userData = cookieStore.get('user')?.value;
-    const { username } = userData ? JSON.parse(userData) : null;
+    // const cookieStore = await cookies();
+    // const userData = cookieStore.get('user')?.value;
+    // const { username } = userData ? JSON.parse(userData) : null;
 
     return (
         <Sidebar collapsible="icon">
@@ -69,7 +69,7 @@ export async function AppSidebar() {
                         </CollapsibleContent>
                     </SidebarGroup>
                 </Collapsible>
-                <Collapsible defaultOpen className="group/collapsible">
+                {/* <Collapsible defaultOpen className="group/collapsible">
                     <SidebarGroup>
                         <SidebarGroupLabel asChild>
                             <CollapsibleTrigger>
@@ -94,7 +94,7 @@ export async function AppSidebar() {
                             </SidebarGroupContent>
                         </CollapsibleContent>
                     </SidebarGroup>
-                </Collapsible>
+                </Collapsible> */}
                 {/* <Collapsible defaultOpen className="group/collapsible">
                     <SidebarGroup>
                         <SidebarGroupLabel asChild>
@@ -167,7 +167,7 @@ export async function AppSidebar() {
                         </CollapsibleContent>
                     </SidebarGroup>
                 </Collapsible> */}
-                <Collapsible defaultOpen className="group/collapsible">
+                {/* <Collapsible defaultOpen className="group/collapsible">
                     <SidebarGroup>
                         <SidebarGroupLabel asChild>
                             <CollapsibleTrigger>
@@ -192,8 +192,8 @@ export async function AppSidebar() {
                             </SidebarGroupContent>
                         </CollapsibleContent>
                     </SidebarGroup>
-                </Collapsible>
-                <Collapsible defaultOpen className="group/collapsible">
+                </Collapsible> */}
+                {/* <Collapsible defaultOpen className="group/collapsible">
                     <SidebarGroup>
                         <SidebarGroupLabel asChild>
                             <CollapsibleTrigger>
@@ -218,10 +218,10 @@ export async function AppSidebar() {
                             </SidebarGroupContent>
                         </CollapsibleContent>
                     </SidebarGroup>
-                </Collapsible>
+                </Collapsible> */}
             </SidebarContent>
             <SidebarFooter>
-                <SidebarMenu>
+                {/* <SidebarMenu>
                     <SidebarMenuItem>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
@@ -230,12 +230,12 @@ export async function AppSidebar() {
                                 </SidebarMenuButton>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                                {/* <DropdownMenuItem asChild>
+                                <DropdownMenuItem asChild>
                                     <Link href="/account/settings">
                                         <Settings />
                                         Settings
                                     </Link>
-                                </DropdownMenuItem> */}
+                                </DropdownMenuItem>
                                 <DropdownMenuItem onClick={signout}>
                                     <LogOut />
                                     Kilépés
@@ -243,7 +243,7 @@ export async function AppSidebar() {
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </SidebarMenuItem>
-                </SidebarMenu>
+                </SidebarMenu> */}
             </SidebarFooter>
 
         </Sidebar >

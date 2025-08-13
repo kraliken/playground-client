@@ -53,17 +53,17 @@ export async function uploadInvoiceAndExtractData(endpointSuffix, formData) {
     }
 
     try {
-        const cookieStore = await cookies();
-        const token = cookieStore.get('access_token')?.value;
+        // const cookieStore = await cookies();
+        // const token = cookieStore.get('access_token')?.value;
 
-        if (!token) {
-            throw new Error('No token – the user is not logged in.');
-        }
+        // if (!token) {
+        //     throw new Error('No token – the user is not logged in.');
+        // }
         const response = await axios.post(
             `${BASE_URL}/api/v1/${endpointSuffix}`,
             formData,
             {
-                headers: { 'Cookie': `access_token=${token}` },
+                // headers: { 'Cookie': `access_token=${token}` },
                 responseType: 'arraybuffer',
             }
         );
