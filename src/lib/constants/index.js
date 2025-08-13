@@ -1,4 +1,4 @@
-import { AreaChart, Banknote, BookOpen, Briefcase, ChevronsLeftRightEllipsis, CloudUpload, FileDigit, FileOutput, FileSpreadsheet, FileWarning, Mail, Send, Smartphone, UserPen } from "lucide-react";
+import { AreaChart, Banknote, BookOpen, Briefcase, ChevronsLeftRightEllipsis, CloudUpload, FileDigit, FileOutput, FileSpreadsheet, FileWarning, Mail, MapPinCheck, Send, Smartphone, UserPen, UserPlus } from "lucide-react";
 
 export const aerozoneListLinks = [
     {
@@ -79,17 +79,19 @@ export const reportListLinks = [
         icon: <AreaChart />,
         href: "/reports/summary ",
         colorKey: "",
+    }
+]
+export const roadRecordListLinks = [
+    {
+        label: "Google API teszt",
+        icon: <MapPinCheck />,
+        href: "/roadrecord ",
+        colorKey: "",
     },
-    // {
-    //     label: "Kintlevőségek",
-    //     icon: <FileWarning />,
-    //     href: "/reports/invoice-status",
-    //     colorKey: "",
-    // },
-    // {
-    //     label: "Bérkültségek",
-    //     icon: <Banknote />,
-    //     href: "/reports/upload/vodafone/database",
-    //     colorKey: "",
-    // }
+    {
+        label: "Új dolgozó",
+        icon: <UserPlus />,
+        href: "/roadrecord/employees/add ",
+        colorKey: "",
+    }
 ]
